@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My First Web Page</title>
+</head>
+
+  <body>
+
+    <script src = "./node_modules/pixi.js/dist/pixi.min.js"></script>
+    <script>
+        //สร้างตัวแปร app และกำหนดค่าให้กับตัวแปร app ด้วยค่าที่สร้างขึ้นมาจาก PIXI.Application
+        const app = new PIXI.Application({ 
+            background: '#1099bb' ,
+            width: 1600,
+            height: 920
+        }); 
+        
+        document.body.appendChild(app.view); //เพิ่ม app.view ลงใน body
+    let isFlower = true;
+
+      const texture = PIXI.Texture.from('1.png');
+      const secondTexture = PIXI.Texture.from('2.png');
+      
+      // create a new Sprite using the texture
+      const character = new PIXI.Sprite(texture);
+      
+      // center the sprites anchor point
+      character.anchor.set(0.5);
+      
+      // move the sprite to the center of the screen
+      character.x = app.screen.width / 2;
+      character.y = app.screen.height / 2;
+      
+      app.stage.addChild(character);
+      
+      // make the sprite interactive
+      character.interactive = true;
+      character.cursor = 'pointer';
+      
+      character.on('pointertap', () => {
+          isFlower = !isFlower;
+          // Dynamically swap the texture
+          character.texture = isFlower ? texture : secondTexture;
+      });
+      
+      app.ticker.add(() => {
+          character.rotation += 0.02;
+      });
+      </script>
+
+  </body>
+</html>
+
